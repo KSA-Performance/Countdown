@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Page</title>
+    <style>
+        body {
+            background-color: darkgreen;
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .countdown-container {
+            text-align: center;
+            margin: 20px;
+        }
+        .countdown {
+            font-size: 2em;
+            margin: 10px 0;
+        }
+        .logo {
+            width: 100px;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="countdown-container">
+        <img src="path/to/OCA-logo.png" alt="OCA Logo" class="logo">
+        <h1>Countdown to Olympic Games</h1>
+        <div id="olympic-countdown" class="countdown"></div>
+    </div>
+    <div class="countdown-container">
+        <img src="path/to/IOC-logo.png" alt="IOC Logo" class="logo">
+        <h1>Countdown to Asian Games</h1>
+        <div id="asian-countdown" class="countdown"></div>
+    </div>
+    <div class="countdown-container">
+        <h1>Months, Weeks, and Days Countdown</h1>
+        <div id="general-countdown" class="countdown"></div>
+    </div>
+    <script>
+        function updateCountdown(targetDate, elementId) {
+            const now = new Date();
+            const timeUntil = targetDate - now;
+
+            const days = Math.floor(timeUntil / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeUntil % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeUntil % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeUntil % (1000 * 60)) / 1000);
+
+            document.getElementById(elementId).innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        }
+
+        const olympicDate = new Date('2024-07-26T00:00:00'); // Adjust to the actual date of the Olympic Games
+        const asianGamesDate = new Date('2026-09-19T00:00:00'); // Adjust to the actual date of the Asian Games
+
+        function updateGeneralCountdown() {
+            const now = new Date();
+            const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+            const nextMonth = new Date(now.getFullYear(), now.getMonth() + 1, 1);
+            const weeksUntil = Math.floor((nextMonth - now) / (1000 * 60 * 60 * 24 * 7));
+            const daysUntil = Math.floor((nextMonth - now) / (1000 * 60 * 60 * 24));
+
+            document.getElementById('general-countdown').innerHTML = `${weeksUntil} weeks ${daysUntil % 7} days`;
+        }
+
+        function updateAllCountdowns() {
+            updateCountdown(olympicDate, 'olympic-countdown');
+            updateCountdown(asianGamesDate, 'asian-countdown');
+            updateGeneralCountdown();
+        }
+
+        setInterval(updateAllCountdowns, 1000);
+        updateAllCountdowns();
+    </script>
+</body>
+</html>
